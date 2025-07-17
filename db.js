@@ -1,6 +1,15 @@
 const { Schema, default: mongoose } = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
-require('dotenv').config();
+
+const connectDB = async () => {
+    try {
+        await mongoose.connect(process.env.MONGO_URL);
+        console.log(" Connected to MongoDB");
+    } catch (err) {
+        console.error(" MongoDB connection error:", err.message);
+        process.exit(1);
+    }
+};
 
 const userSchema = new Schema({
     userId: ObjectId,
@@ -41,5 +50,6 @@ module.exports = {
     userModel,
     adminModel,
     courseModel,
-    purchaseModel
-}
+    purchaseModel,
+    connectDB,
+};

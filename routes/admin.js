@@ -33,5 +33,6 @@ adminRouter.post("/course/bulk", function(req, res) {
 })
 
 module.exports = {
-    adminRouter: adminRouter
+    adminRouter: adminRouter,
+    adminModel: adminModel,
 }
