@@ -75,13 +75,13 @@ userRouter.get("/signin", async function(req, res) {
         email: email,
     });
 
-    if (!admin) {
+    if (!user) {
         return res.status(403).json({
             message: "Invalid credentials",
         });
     }
 
-    const passwordMatched = await bcrypt.compare(password, admin.password);
+    const passwordMatched = await bcrypt.compare(password, user.password);
 
     if (passwordMatched) {
         const token = jwt.sign({
