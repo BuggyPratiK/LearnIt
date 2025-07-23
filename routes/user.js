@@ -32,8 +32,8 @@ userRouter.post("/signup", async function(req, res) {
     //Extract validated email, password, firstName, lastName from the request body
     const { email, password, firstName, lastName } = req.body;
 
-    //Hash the user's password using bcrypt with a salt rounds of 5
-    const hashedPassword = await bcrypt.hash(password, 5)
+    //Hash the user's password using bcrypt with a salt rounds of 12
+    const hashedPassword = await bcrypt.hash(password, 12)
 
     // Creating a new user in the database 
     try {
@@ -55,7 +55,7 @@ userRouter.post("/signup", async function(req, res) {
     });
 });
 
-userRouter.get("/signin", async function(req, res) {
+userRouter.post("/signin", async function(req, res) {
     const requireBody = z.object({
         email: z.string().email(),
         password: z.string().min(8),

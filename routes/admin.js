@@ -28,8 +28,8 @@ adminRouter.post("/signup", async function(req, res) {
     //Extract validated email, password, firstName, lastName from the request body
     const { email, password, firstName, lastName } = req.body;
 
-    //Hash the user's password using bcrypt with a salt rounds of 5
-    const hashedPassword = await bcrypt.hash(password, 5)
+    //Hash the user's password using bcrypt with a salt rounds of 12
+    const hashedPassword = await bcrypt.hash(password, 12)
 
     // Creating a new user in the database 
     try {
@@ -51,7 +51,7 @@ adminRouter.post("/signup", async function(req, res) {
     });
 });
 
-adminRouter.get("/signin", async function(req, res) {
+adminRouter.post("/signin", async function(req, res) {
 
     const requireBody = z.object({
         email: z.string().email(),
@@ -59,7 +59,7 @@ adminRouter.get("/signin", async function(req, res) {
     });
 
     const parseDataWithSuccess = requireBody.safeParse(req.body);
-    if (!parseDataWithSuccess) {
+    if (!parseDataWithSuccess.success) {
         return res.json({
             message: "Incorrect data format",
             error: parseDataWithSuccess.error,
