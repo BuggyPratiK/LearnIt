@@ -62,7 +62,7 @@ userRouter.get("/signin", async function(req, res) {
     });
 
     const parseDataWithSuccess = requireBody.safeParse(req.body);
-    if (!parseDataWithSuccess) {
+    if (!parseDataWithSuccess.success) {
         return res.json({
             message: "Incorrect data format",
             error: parseDataWithSuccess.error,
