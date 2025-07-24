@@ -1,14 +1,15 @@
 const { Router } = require("express");
-
-// Create a new instance of the Router for defining user-related routes
-const userRouter = Router();
+const { userModel, purchaseModel, courseModel } = require("../db");
+const { userMiddleware } = require("../middleware/user");
+const { JWT_USER_PASSWORD } = require("../config")
 
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const z = require("zod");
-const { userModel } = require("../db");
 
-const { JWT_USER_PASSWORD } = require("../config")
+
+// Create a new instance of the Router for defining user-related routes
+const userRouter = Router();
 
 userRouter.post("/signup", async function(req, res) {
 
@@ -98,11 +99,32 @@ userRouter.post("/signin", async function(req, res) {
     }
 })
 
-userRouter.get("/purchases", function(req, res) {
-    res.json({
-        message: " "
+userRouter.get("/purchases", userMiddleware, async function(req, res) {
+    const userId = req.userId;
+    const purchases = await purchaseModel.find({
+        userId: userId,
     })
-})
+
+    if (!purchases) {
+        return res.status(404).json({
+            message: "No purchases found",
+        });
+    }
+
+    // If purchases are found, extract the courseIds from the found purchases 
+    const purchasesCourseIds = purchases.map((purchase) => purchase.courseId);
+
+    // Find all course details associated with the courseIds 
+    const courseData = await courseModel.find({
+        _id: { $in: purchasesCourseIds },
+    });
+
+    // Send the purchases and corresponding course details back to the client
+    res.status(200).json({
+        purchases,
+        courseData,
+    });
+});
 
 module.exports = {
     userRouter: userRouter
