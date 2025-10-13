@@ -1,24 +1,26 @@
 {
   "name": "learnit",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:server": "cd server && npm start",
+    "start:client": "cd client && npm run dev",
+    "dev": "concurrently \"npm run start:server\" \"npm run start:client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BuggyPratiK/LearnIt.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
-  "dependencies": {
-    "bcryptjs": "^3.0.2",
-    "dotenv": "^17.2.0",
-    "express": "^5.1.0",
-    "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.16.3",
-    "nodemon": "^3.1.10",
-    "zod": "^4.0.5"
+  "bugs": {
+    "url": "https://github.com/BuggyPratiK/LearnIt/issues"
+  },
+  "homepage": "https://github.com/BuggyPratiK/LearnIt#readme",
+  "description": "",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
   }
 }
