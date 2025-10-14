@@ -1,0 +1,39 @@
+import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import axios from 'axios';
+import FormCard from '../components/FormCard';
+
+const API_BASE_URL = 'http://localhost:3000/api/v1';
+
+const AdminSignup = () => {
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [message, setMessage] = useState('');
+    const navigate = useNavigate();
+
+    const handleSignup = async () => {
+        try {
+            const response = await axios.post(`${API_BASE_URL}/admin/signup`, { firstName, lastName, email, password });
+            setMessage(`${response.data.message}. Redirecting to sign in...`);
+            setTimeout(() => navigate('/admin/signin'), 2000);
+        } catch (error) {
+            setMessage(error.response?.data?.message || "An error occurred during signup.");
+        }
+    };
+
+    return (
+        <FormCard title="Create Admin Account" buttonText="Sign Up" onSubmit={handleSignup} message={message}>
+            <input className="w-full px-4 py-2 border rounded-lg" type="text" placeholder="First Name" onChange={e => setFirstName(e.target.value)} />
+            <input className="w-full px-4 py-2 border rounded-lg" type="text" placeholder="Last Name" onChange={e => setLastName(e.target.value)} />
+            <input className="w-full px-4 py-2 border rounded-lg" type="email" placeholder="Email" onChange={e => setEmail(e.target.value)} />
+            <input className="w-full px-4 py-2 border rounded-lg" type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
+             <p className="text-center text-sm text-gray-600">
+                Already have an admin account? <Link to="/admin/signin" className="text-blue-500 hover:underline">Sign In</Link>
+            </p>
+        </FormCard>
+    );
+};
+
+export default AdminSignup;
