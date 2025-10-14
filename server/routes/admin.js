@@ -123,6 +123,8 @@ adminRouter.post("/course", adminMiddleware, async function(req, res) {
     }
 
     // Get title, description, imageUrl, price from the request body
+    const { title, description, imageUrl, price } = parsedDataWithSuccess.data;
+
     const course = await courseModel.create({
         title: title,
         description: description,
@@ -136,7 +138,7 @@ adminRouter.post("/course", adminMiddleware, async function(req, res) {
         message: "Course created",
         courseId: course._id,
     });
-})
+});
 
 adminRouter.put("/course", adminMiddleware, async function(req, res) {
     const adminId = req.userId;

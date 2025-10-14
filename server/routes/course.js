@@ -6,7 +6,7 @@ const { userMiddleware } = require("../middleware/user");
 // Define a POST route for purchasing a course, with user authentication middleware
 courseRouter.post("/purchase", userMiddleware, async function(req, res) {
     const userId = req.userId;
-    const courseId = rq.body.courseId;
+    const courseId = req.body.courseId;
 
     // If courseId isn't provided in the req.body, return a error response to the client
     if (!courseId) {
