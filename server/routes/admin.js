@@ -123,7 +123,7 @@ adminRouter.post("/course", adminMiddleware, async function(req, res) {
     }
 
     // Get title, description, imageUrl, price from the request body
-    const { title, description, imageUrl, price } = parsedDataWithSuccess.data;
+    const { title, description, imageUrl, price } = parseDataWithSuccess.data;
 
     const course = await courseModel.create({
         title: title,
