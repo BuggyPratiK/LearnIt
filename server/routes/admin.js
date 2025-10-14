@@ -100,7 +100,7 @@ adminRouter.post("/signin", async function(req, res) {
 
 // Define the admin routes for creating a course
 adminRouter.post("/course", adminMiddleware, async function(req, res) {
-    // Get the adminId from the request object
+
     const adminId = req.adminId;
 
     // Validate the request body data using zod schema
@@ -123,7 +123,7 @@ adminRouter.post("/course", adminMiddleware, async function(req, res) {
     }
 
     // Get title, description, imageUrl, price from the request body
-    const { title, description, imageUrl, price } = parsedDataWithSuccess.data;
+    const { title, description, imageUrl, price } = parseDataWithSuccess.data;
 
     const course = await courseModel.create({
         title: title,
@@ -133,7 +133,6 @@ adminRouter.post("/course", adminMiddleware, async function(req, res) {
         creatorId: adminId,
     });
 
-    // Respond with a success message if the course is created Successful
     res.status(201).json({
         message: "Course created",
         courseId: course._id,
@@ -141,7 +140,7 @@ adminRouter.post("/course", adminMiddleware, async function(req, res) {
 });
 
 adminRouter.put("/course", adminMiddleware, async function(req, res) {
-    const adminId = req.userId;
+    const adminId = req.adminId;
 
     // Define a schema using zod to validate the request body for updating a course
     const requireBody = z.object({
@@ -157,7 +156,7 @@ adminRouter.put("/course", adminMiddleware, async function(req, res) {
 
     // If validation fails, respond with an error message and the details of the error
     if (!parseDataWithSuccess) {
-        return rse.json({
+        return res.json({
             message: "Incorrect data format",
             error: parseDataWithSuccess.error,
         });
@@ -200,8 +199,31 @@ adminRouter.put("/course", adminMiddleware, async function(req, res) {
     });
 });
 
+adminRouter.delete("/course/:courseId", adminMiddleware, async function(req, res) {
+    const adminId = req.adminId;
+    const courseId = req.params.courseId;
+
+    const course = await courseModel.findOne({
+        _id: courseId,
+        creatorId: adminId,
+    });
+
+    if (!course) {
+        return res.status(404).json({
+            message: "Course not found or you don't have permission to delete it!",
+        });
+    }
+
+    await courseModel.deleteOne({
+        _id: courseId,
+    });
+
+    res.status(200).json({
+        message: "Course deleted successfully!",
+    });
+});
+
 adminRouter.get("/course/bulk", adminMiddleware, async function(req, res) {
-    // Get the adminId from the request object
     const adminId = req.adminId;
 
     // Find all the courses with given creatorId

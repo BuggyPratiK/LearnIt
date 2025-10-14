@@ -5,8 +5,14 @@ const Appbar = () => {
     const { userEmail, isLoading, logout } = useUserStore();
     const navigate = useNavigate();
 
+    const handleLogout = () => {
+        logout(); // Call the unified logout function
+        navigate('/'); // Redirect to homepage after logout
+    };
+
+    // Don't render anything until the store has checked for existing tokens
     if (isLoading) {
-        return null; // Don't render appbar until user state is resolved
+        return <header className="bg-white shadow-md"><nav className="container mx-auto px-6 py-4 h-[68px]"></nav></header>;
     }
 
     return (
@@ -19,10 +25,7 @@ const Appbar = () => {
                         <>
                             <Link to="/purchased" className="text-gray-600 hover:text-blue-500 transition duration-300">My Courses</Link>
                             <button
-                                onClick={() => {
-                                    logout();
-                                    navigate('/');
-                                }}
+                                onClick={handleLogout}
                                 className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-300"
                             >
                                 Logout
@@ -43,4 +46,3 @@ const Appbar = () => {
 };
 
 export default Appbar;
-
