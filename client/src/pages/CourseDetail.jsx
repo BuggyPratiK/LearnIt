@@ -4,7 +4,7 @@ import axios from 'axios';
 import useUserStore from '../store/userStore';
 import Loading from '../components/Loading';
 
-const API_BASE_URL = 'http://localhost:3000/api/v1';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const CourseDetail = () => {
     const { courseId } = useParams();
