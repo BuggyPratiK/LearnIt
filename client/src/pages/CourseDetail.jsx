@@ -46,13 +46,13 @@ const CourseDetail = () => {
 
     return (
         <div className="container mx-auto p-8">
-            <div className="bg-white shadow-xl rounded-lg overflow-hidden md:flex">
+            <div className="p-8 mt-8 bg-gray-300 dark:bg-gray-900 shadow-2xl rounded-xl overflow-hidden md:flex transform hover:-translate-y-2  transition-transform-colors duration-300">
                 <img src={course.imageUrl} alt={course.title} className="md:w-1/2 object-cover" />
                 <div className="p-8 md:w-1/2 flex flex-col justify-center">
                     <h1 className="text-4xl font-bold mb-4">{course.title}</h1>
-                    <p className="text-gray-700 mb-6">{course.description}</p>
+                    <p className="text-gray-300 mb-6">{course.description}</p>
                     <p className="text-3xl font-bold text-blue-600 mb-6">${course.price}</p>
-                    <button onClick={handlePurchase} className="w-full bg-green-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-600 transition duration-300">
+                    <button onClick={handlePurchase} className="w-full bg-green-500 dark:bg-green-600 text-white text-xl/7 font-bold  py-3 px-6 rounded-lg hover:bg-green-600 dark:hover:bg-green-700 transition duration-300">
                         {userEmail ? 'Purchase Now' : 'Sign In to Purchase'}
                     </button>
                 </div>

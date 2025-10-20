@@ -20,12 +20,12 @@ const Appbar = () => {
   }
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border backdrop-blur-lg bg-gray-300/80 dark:bg-blue-950/40 text-foreground transition-colors duration-300">
+    <header className="sticky top-0 z-50 border-b border-border bg-gradient-to-b from-blue-200/30 to-purple-400/30 dark:from-blue-950/40 dark:to-blue-900/40 backdrop-blur-lg  text-foreground transition-colors duration-300">
       <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
         {/* Logo / Title */}
         <Link
           to="/"
-          className="text-2xl font-bold text-foreground hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-300"
+          className="text-4xl font-bold text-foreground dark:bg-gradient-to-br from-teal-500 to-sky-600 bg-clip-text dark:text-transparent hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-300"
         >
           LearnIt
         </Link>
