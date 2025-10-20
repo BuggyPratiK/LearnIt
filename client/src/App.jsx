@@ -15,8 +15,7 @@ import EditCourse from './pages/EditCourse';
 
 function App() {
   return (
-    <ThemeProvider>
-      <div className= "min-h-screen bg-background text-foreground">
+      <div className="min-h-screen bg-background text-foreground">
       <Appbar />
       <main>
         <Routes>
@@ -37,8 +36,6 @@ function App() {
         </Routes>
       </main>
     </div>
-    </ThemeProvider>
-    
   );
 }
 
