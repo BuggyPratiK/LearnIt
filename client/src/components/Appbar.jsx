@@ -20,7 +20,7 @@ const Appbar = () => {
   }
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-lg text-foreground transition-colors duration-300">
+    <header className="sticky top-0 z-50 border-b border-border backdrop-blur-lg bg-gray-300/80 dark:bg-blue-950/40 text-foreground transition-colors duration-300">
       <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
         {/* Logo / Title */}
         <Link

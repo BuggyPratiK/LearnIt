@@ -54,10 +54,10 @@ const EditCourse = () => {
 
     return (
         <FormCard title="Edit Course" buttonText="Save Changes" onSubmit={handleUpdate} message={message}>
-            <input name="title" className="w-full p-2 border rounded" type="text" placeholder="Title" value={course.title} onChange={handleChange} />
-            <input name="description" className="w-full p-2 border rounded" type="text" placeholder="Description" value={course.description} onChange={handleChange} />
-            <input name="price" className="w-full p-2 border rounded" type="number" placeholder="Price" value={course.price} onChange={handleChange} />
-            <input name="imageUrl" className="w-full p-2 border rounded" type="text" placeholder="Image URL" value={course.imageUrl} onChange={handleChange} />
+            <input name="title" className="dark:bg-gray-700 dark:text-white dark:placeholder:text-white w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" type="text" placeholder="Title" value={course.title} onChange={handleChange} />
+            <input name="description" className="dark:bg-gray-700 dark:text-white dark:placeholder:text-white w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" type="text" placeholder="Description" value={course.description} onChange={handleChange} />
+            <input name="price" className="dark:bg-gray-700 dark:text-white dark:placeholder:text-white w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" type="number" placeholder="Price" value={course.price} onChange={handleChange} />
+            <input name="imageUrl" className="dark:bg-gray-700 dark:text-white dark:placeholder:text-white w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" type="text" placeholder="Image URL" value={course.imageUrl} onChange={handleChange} />
         </FormCard>
     );
 };

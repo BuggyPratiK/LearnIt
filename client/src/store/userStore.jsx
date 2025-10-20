@@ -1,43 +1,76 @@
 import { create } from 'zustand';
 
+/*
+  Zustand store for managing authentication (both user and admin).
+  This store:
+  - Handles login/logout for both user and admin roles.
+  - Persists user info and tokens in localStorage.
+  - Automatically checks if a session exists on app startup.
+*/
+
 const useUserStore = create((set) => ({
-  userEmail: null,
-  isLoading: true, // Start with loading true
+  // State variables
+  userEmail: null,  // Stores currently logged-in user/admin email.
+  role: null,       // Can be either "user" or "admin".
+  isLoading: true,  // While checking stored sessions during app start.
 
-  // A single login function for both users and admins
-  login: (email, tokenType) => {
-    // We store a simple flag to know if a user of that type is logged in.
-    // The actual JWT token is still stored separately by the sign-in components.
-    localStorage.setItem(tokenType, 'true'); 
+  // -----------------------------
+  // Login function
+  // -----------------------------
+  // Called after a successful sign-in request.
+  // Stores JWT token and user info in localStorage.
+  // 'role' determines which type of token is stored (userToken/adminToken).
+  // Updates the Zustand state accordingly.
+  login: (email, role, token) => {
+    localStorage.setItem(`${role}Token`, token);  // e.g. "adminToken" or "userToken"
     localStorage.setItem('userEmail', email);
-    set({ userEmail: email, isLoading: false });
+    localStorage.setItem('role', role);
+
+    // Update Zustand store state
+    set({ userEmail: email, role, isLoading: false });
   },
 
-  // A single logout function that clears all possible session types
+  // -----------------------------
+  // Logout function
+  // -----------------------------
+  // Clears all localStorage items related to login.
+  // Works for both user and admin sessions.
   logout: () => {
-    localStorage.removeItem('userToken'); // The flag for user
-    localStorage.removeItem('adminToken'); // The flag for admin
-    localStorage.removeItem('token'); // The user's actual JWT
-    localStorage.removeItem('adminToken'); // The admin's actual JWT (in case it's named this)
+    localStorage.removeItem('userToken');
+    localStorage.removeItem('adminToken');
     localStorage.removeItem('userEmail');
-    set({ userEmail: null });
+    localStorage.removeItem('role');
+
+    // Reset Zustand state
+    set({ userEmail: null, role: null });
   },
 
-  // Check for either token on application startup
+  // -----------------------------
+  // Initialize function
+  // -----------------------------
+  // Called automatically when the app starts (see bottom of file).
+  // Checks if there's a valid session stored in localStorage.
+  // If found, sets userEmail and role so the UI knows you're logged in.
+  // If not found, marks loading as complete anyway.
   initialize: () => {
+    const email = localStorage.getItem('userEmail');
+    const role = localStorage.getItem('role');
     const userToken = localStorage.getItem('userToken');
     const adminToken = localStorage.getItem('adminToken');
-    const email = localStorage.getItem('userEmail');
-    if ((userToken || adminToken) && email) {
-      set({ userEmail: email, isLoading: false });
+
+    // If a token + email + role exist, restore the session.
+    if ((userToken || adminToken) && email && role) {
+      set({ userEmail: email, role, isLoading: false });
     } else {
-      set({ isLoading: false }); // Finish loading even if not logged in
+      // No session found, mark as finished loading
+      set({ isLoading: false });
     }
-  }
+  },
 }));
 
-// Initialize the store once when the app loads to check for existing sessions
+
+// Run initialize() immediately when the store is first imported.
+// This ensures session restoration happens on app startup.
 useUserStore.getState().initialize();
 
 export default useUserStore;
-

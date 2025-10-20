@@ -28,10 +28,10 @@ const CreateCourse = () => {
 
     return (
         <FormCard title="Create New Course" buttonText="Create Course" onSubmit={handleCreate} message={message}>
-            <input className="w-full p-2 border rounded" type="text" placeholder="Title" onChange={e => setTitle(e.target.value)} />
-            <input className="w-full p-2 border rounded" type="text" placeholder="Description" onChange={e => setDescription(e.target.value)} />
-            <input className="w-full p-2 border rounded" type="number" placeholder="Price" onChange={e => setPrice(e.target.value)} />
-            <input className="w-full p-2 border rounded" type="text" placeholder="Image URL" onChange={e => setImageUrl(e.target.value)} />
+            <input className="dark:bg-gray-700 dark:text-white dark:placeholder:text-white w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" type="text" placeholder="Title" onChange={e => setTitle(e.target.value)} />
+            <input className="dark:bg-gray-700 dark:text-white dark:placeholder:text-white w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" type="text" placeholder="Description" onChange={e => setDescription(e.target.value)} />
+            <input className="dark:bg-gray-700 dark:text-white dark:placeholder:text-white w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" type="number" placeholder="Price" onChange={e => setPrice(e.target.value)} />
+            <input className="dark:bg-gray-700 dark:text-white dark:placeholder:text-white w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" type="text" placeholder="Image URL" onChange={e => setImageUrl(e.target.value)} />
         </FormCard>
     );
 };

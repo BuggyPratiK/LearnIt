@@ -1,5 +1,4 @@
 import { Routes, Route } from 'react-router-dom';
-import { ThemeProvider } from './components/ThemeProvider';
 import Appbar from './components/Appbar';
 import Landing from './pages/Landing';
 import Courses from './pages/Courses';

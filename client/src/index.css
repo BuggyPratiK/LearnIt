@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -29,8 +28,11 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --radius: 0.5rem
+    --radius: 0.5rem;
+    --navbar: 0 0% 98%;
+    --input-foreground: 222.2 84% 4.9%;
   }
+
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
@@ -55,19 +57,43 @@
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%
+    --chart-5: 340 75% 55%;
+    --navbar: 217 28% 12%;
+    --input-foreground: 210 40% 98%;
   }
-}
 
-@layer base {
-  * {
-    @apply border-border;
+  *, ::before, ::after {
+    border-color: hsl(var(--border));
   }
+
+  /* ✅ Let Tailwind's rounded utilities work — no global override */
+  input,
+  select,
+  textarea {
+    border-radius: var(--radius);
+  }
+
   body {
     @apply bg-background text-foreground;
   }
 }
 
-html, body, #root {
+@layer components {
+  .appbar {
+    background: hsl(var(--navbar) / 0.58);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center rounded-lg px-4 py-2 font-medium transition;
+    /* optional, keep for consistency */
+    border-radius: var(--radius);
+  }
+}
+
+html,
+body,
+#root {
   height: 100%;
 }
