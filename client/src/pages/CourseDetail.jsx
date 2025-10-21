@@ -47,7 +47,7 @@ const CourseDetail = () => {
     return (
         <div className="container mx-auto p-8">
             <div className="p-8 mt-8 bg-gray-300 dark:bg-gray-900 shadow-2xl rounded-xl overflow-hidden md:flex transform hover:-translate-y-2  transition-transform-colors duration-300">
-                <img src={course.imageUrl} alt={course.title} className="md:w-1/2 object-cover" />
+                <img src={course.imageUrl} alt={course.title} className="md:w-1/2 object-cover transition duration-300 ease-in-out hover:scale-105" />
                 <div className="p-8 md:w-1/2 flex flex-col justify-center">
                     <h1 className="text-4xl font-bold mb-4">{course.title}</h1>
                     <p className="text-gray-300 mb-6">{course.description}</p>
