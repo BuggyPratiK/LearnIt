@@ -11,25 +11,54 @@ const { JWT_ADMIN_PASSWORD } = require("../config")
 
 adminRouter.post("/signup", async function(req, res) {
 
+    // Check if all required fields are provided
+    const { email, password, firstName, lastName } = req.body;
+    
+    if (!email || !password || !firstName || !lastName) {
+        return res.status(400).json({
+            message: "Please fill all the required fields"
+        });
+    }
+
     // Input validation using zod
     const requireBody = z.object({
         email: z.string().email().min(3),
         password: z.string().min(8),
-        firstName: z.string().min(3),
-        lastName: z.string().min(3),
+        firstName: z.string().min(3).regex(/^[a-zA-Z]+$/, "First name must contain only letters"),
+        lastName: z.string().min(3).regex(/^[a-zA-Z]+$/, "Last name must contain only letters"),
     });
 
     const parsedDataSuccess = requireBody.safeParse(req.body);
 
     if (!parsedDataSuccess.success) {
-        return res.json({
-            message: "Incorrect Format",
-            error: parsedDataSuccess.error
-        })
-    }
+        const errors = parsedDataSuccess.error.errors.map(err => {
+            const field = err.path[0];
+            const message = err.message;
+            
+            // Custom error messages for better UX
+            if (field === 'firstName' && err.code === 'too_small') {
+                return 'First name must be at least 3 characters long';
+            }
+            if (field === 'lastName' && err.code === 'too_small') {
+                return 'Last name must be at least 3 characters long';
+            }
+            if (field === 'password' && err.code === 'too_small') {
+                return 'Password must be at least 8 characters long';
+            }
+            if (field === 'email') {
+                return 'Please enter a valid email address';
+            }
+            if (field === 'firstName' || field === 'lastName') {
+                return message; // For regex validation
+            }
+            return message;
+        });
 
-    //Extract validated email, password, firstName, lastName from the request body
-    const { email, password, firstName, lastName } = req.body;
+        return res.status(400).json({
+            message: errors[0], // Show the first error
+            errors: errors // Send all errors if frontend needs them
+        });
+    }
 
     //Hash the user's password using bcrypt with a salt rounds of 12
     const hashedPassword = await bcrypt.hash(password, 12)
@@ -56,6 +85,15 @@ adminRouter.post("/signup", async function(req, res) {
 
 adminRouter.post("/signin", async function(req, res) {
 
+    // Check if all required fields are provided
+    const { email, password } = req.body;
+    
+    if (!email || !password) {
+        return res.status(400).json({
+            message: "Please fill all the required fields"
+        });
+    }
+
     const requireBody = z.object({
         email: z.string().email(),
         password: z.string().min(8),
@@ -63,13 +101,23 @@ adminRouter.post("/signin", async function(req, res) {
 
     const parseDataWithSuccess = requireBody.safeParse(req.body);
     if (!parseDataWithSuccess.success) {
-        return res.json({
-            message: "Incorrect data format",
-            error: parseDataWithSuccess.error,
+        const errors = parseDataWithSuccess.error.errors.map(err => {
+            const field = err.path[0];
+            
+            if (field === 'password' && err.code === 'too_small') {
+                return 'Password must be at least 8 characters long';
+            }
+            if (field === 'email') {
+                return 'Please enter a valid email address';
+            }
+            return err.message;
+        });
+
+        return res.status(400).json({
+            message: errors[0],
+            errors: errors
         });
     };
-
-    const { email, password } = req.body;
 
     const admin = await adminModel.findOne({
         email: email,
