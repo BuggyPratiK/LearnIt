@@ -14,21 +14,23 @@ const Signin = () => {
     const navigate = useNavigate();
 
     const handleSignin = async () => {
-        try {
-            const response = await axios.post(`${API_BASE_URL}/user/signin`, { email, password });
-            localStorage.setItem('token', response.data.token); // Store the actual JWT
-            login(email, 'userToken'); // Update global state, passing the token type
-            navigate('/courses');
-        } catch (error) {
-            setMessage(error.response?.data?.message || "Invalid credentials.");
-        }
-    };
+  try {
+    const response = await axios.post(`${API_BASE_URL}/user/signin`, { email, password });
+    const token = response.data.token;
+
+    login(email, 'user', token); 
+    navigate('/courses');
+  } catch (error) {
+    setMessage(error.response?.data?.message || "Invalid credentials.");
+  }
+};
+
 
     return (
         <FormCard title="Sign In to LearnIt" buttonText="Sign In" onSubmit={handleSignin} message={message}>
-            <input className="w-full px-4 py-2 border rounded-lg" type="email" placeholder="Email" onChange={e => setEmail(e.target.value)} />
-            <input className="w-full px-4 py-2 border rounded-lg" type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
-            <p className="text-center text-sm text-gray-600">
+            <input className="dark:bg-gray-700 dark:text-white dark:placeholder:text-white w-full px-4 py-2 border border-gray-500 dark:border-gray-700  rounded-lg" type="email" placeholder="Email" onChange={e => setEmail(e.target.value)} />
+            <input className="dark:bg-gray-700 dark:text-white dark:placeholder:text-white w-full px-4 py-2 border border-gray-500 dark:border-gray-700 rounded-lg" type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
+            <p className="text-center text-sm dark:text-gray-300">
                 New here? <Link to="/signup" className="text-blue-500 hover:underline">Create an account</Link>
             </p>
         </FormCard>

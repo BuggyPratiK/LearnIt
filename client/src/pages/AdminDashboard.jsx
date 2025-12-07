@@ -53,10 +53,10 @@ const AdminDashboard = () => {
     return (
         <div className="container mx-auto p-8">
             <div className="flex justify-between items-center mb-8">
-                <h1 className="text-4xl font-bold">Admin Dashboard</h1>
+                <h1 className="text-4xl mb-20 mt-5 font-bold">Admin Dashboard</h1>
                 <button
                     onClick={() => navigate('/admin/create-course')}
-                    className="bg-green-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-600 transition duration-300">
+                    className="bg-green-700 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-800 transition duration-300">
                     + Create New Course
                 </button>
             </div>
@@ -64,11 +64,11 @@ const AdminDashboard = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {courses.map(course => (
                         // --- UPDATED: Course card with more details and buttons ---
-                        <div key={course._id} className="bg-white rounded-lg shadow-lg overflow-hidden">
+                        <div key={course._id} className="bg-card text-card-foreground dark:bg-gray-900 rounded-xl shadow-xl overflow-hidden transform hover:-translate-y-2 transition-transform duration-300 border border-border cursor-pointer">
                             <img src={course.imageUrl} alt={course.title} className="w-full h-48 object-cover" onError={(e) => { e.target.onerror = null; e.target.src = "https://placehold.co/600x400/e2e8f0/e2e8f0?text=Image" }} />
                             <div className="p-4">
                                 <h2 className="text-xl font-bold mb-2">{course.title}</h2>
-                                <p className="text-gray-700 mb-4">${course.price}</p>
+                                <p className="text-xl font-semibold text-blue-500 dark:text-blue-400">${course.price}</p>
                                 <div className="flex justify-end space-x-2">
                                     <button
                                         onClick={() => navigate(`/admin/edit-course/${course._id}`)}

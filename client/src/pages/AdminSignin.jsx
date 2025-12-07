@@ -16,8 +16,8 @@ const AdminSignin = () => {
     const handleSignin = async () => {
         try {
             const response = await axios.post(`${API_BASE_URL}/admin/signin`, { email, password });
-            localStorage.setItem('adminToken', response.data.token); // Store the actual JWT
-            login(email, 'adminToken'); // Update global state, passing the token type
+            const token = response.data.token;
+            login(email, 'admin', token);
             navigate('/admin/dashboard');
         } catch (error) {
             setMessage(error.response?.data?.message || "Invalid credentials.");
@@ -26,9 +26,9 @@ const AdminSignin = () => {
 
     return (
         <FormCard title="Admin Sign In" buttonText="Sign In" onSubmit={handleSignin} message={message}>
-            <input className="w-full px-4 py-2 border rounded-lg" type="email" placeholder="Email" onChange={e => setEmail(e.target.value)} />
-            <input className="w-full px-4 py-2 border rounded-lg" type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
-            <p className="text-center text-sm text-gray-600">
+            <input className="dark:bg-gray-700 dark:text-white dark:placeholder:text-white w-full px-4 py-2 border rounded-lg" type="email" placeholder="Email" onChange={e => setEmail(e.target.value)} />
+            <input className="dark:bg-gray-700 dark:text-white dark:placeholder:text-white w-full px-4 py-2 border rounded-lg" type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
+            <p className="text-center text-sm dark:text-gray-300">
                 Need to create a new admin account? <Link to="/admin/signup" className="text-blue-500 hover:underline">Sign Up</Link>
             </p>
         </FormCard>

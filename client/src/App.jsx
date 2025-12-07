@@ -12,11 +12,9 @@ import AdminDashboard from './pages/AdminDashboard';
 import CreateCourse from './pages/CreateCourse';
 import EditCourse from './pages/EditCourse';
 
-// Note: The 'import './App.css'' line has been removed.
-
 function App() {
   return (
-    <div>
+      <div className="min-h-screen bg-background text-foreground">
       <Appbar />
       <main>
         <Routes>

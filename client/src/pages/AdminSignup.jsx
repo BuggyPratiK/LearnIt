@@ -25,11 +25,11 @@ const AdminSignup = () => {
 
     return (
         <FormCard title="Create Admin Account" buttonText="Sign Up" onSubmit={handleSignup} message={message}>
-            <input className="w-full px-4 py-2 border rounded-lg" type="text" placeholder="First Name" onChange={e => setFirstName(e.target.value)} />
-            <input className="w-full px-4 py-2 border rounded-lg" type="text" placeholder="Last Name" onChange={e => setLastName(e.target.value)} />
-            <input className="w-full px-4 py-2 border rounded-lg" type="email" placeholder="Email" onChange={e => setEmail(e.target.value)} />
-            <input className="w-full px-4 py-2 border rounded-lg" type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
-             <p className="text-center text-sm text-gray-600">
+            <input className="dark:bg-gray-700 dark:text-white dark:placeholder:text-white w-full px-4 py-2 border rounded-lg" type="text" placeholder="First Name" onChange={e => setFirstName(e.target.value)} />
+            <input className="dark:bg-gray-700 dark:text-white dark:placeholder:text-white w-full px-4 py-2 border rounded-lg" type="text" placeholder="Last Name" onChange={e => setLastName(e.target.value)} />
+            <input className="dark:bg-gray-700 dark:text-white dark:placeholder:text-white w-full px-4 py-2 border rounded-lg" type="email" placeholder="Email" onChange={e => setEmail(e.target.value)} />
+            <input className="dark:bg-gray-700 dark:text-white dark:placeholder:text-white w-full px-4 py-2 border rounded-lg" type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
+             <p className="text-center text-sm dark:text-gray-300">
                 Already have an admin account? <Link to="/admin/signin" className="text-blue-500 hover:underline">Sign In</Link>
             </p>
         </FormCard>
