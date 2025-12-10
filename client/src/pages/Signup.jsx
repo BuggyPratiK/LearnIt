@@ -30,7 +30,7 @@ const Signup = () => {
             <input className="dark:bg-gray-700 dark:text-white dark:placeholder:text-white w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" type="email" placeholder="Email" onChange={e => setEmail(e.target.value)} />
             <input className="dark:bg-gray-700 dark:text-white dark:placeholder:text-white w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
              <p className="text-center text-sm dark:text-gray-300">
-                Already have an account? <Link to="/signin" className="text-blue-500 hover:underline">Sign In</Link>
+                Already have an account? <Link to="/signin" className="text-blue-500 hover:underline duration-300">Sign In</Link>
             </p>
         </FormCard>
     );

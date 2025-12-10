@@ -33,7 +33,7 @@ const CourseDetail = () => {
         try {
             await axios.post(`${API_BASE_URL}/course/purchase`,
                 { courseId: course._id },
-                { headers: { 'token': localStorage.getItem('token') } }
+                { headers: { 'token': localStorage.getItem('userToken') } }
             );
             alert('Course purchased successfully!');
             navigate('/purchased');
